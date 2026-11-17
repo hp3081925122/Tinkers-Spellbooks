@@ -30,6 +30,7 @@ public final class TinkersSpellbooks {
         MinecraftForge.EVENT_BUS.register(SpellcastingModEvents.class);
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
             modBus.addListener(SpellbooksClientSetup::onClientSetup);
+            modBus.addListener(SpellbooksClientSetup::onRegisterAdditionalModels);
             modBus.addListener(ModularGeoTextureCache::onRegisterReloadListeners);
         });
     }

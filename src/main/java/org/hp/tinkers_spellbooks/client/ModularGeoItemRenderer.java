@@ -8,14 +8,17 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.blaze3d.vertex.VertexFormat;
 import com.mojang.logging.LogUtils;
 import net.minecraft.Util;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import org.hp.tinkers_spellbooks.TinkersSpellbooks;
 import org.slf4j.Logger;
@@ -72,6 +75,7 @@ public class ModularGeoItemRenderer<T extends Item & GeoItem> extends GeoItemRen
     private final String toolName;
     private final int glowMaterialIndex;
     private final ResourceLocation glowTexture;
+    private final ResourceLocation guiModelLocation;
 
     public ModularGeoItemRenderer(String toolName, int glowMaterialIndex) {
         super(new DefaultedItemGeoModel<T>(ResourceLocation.fromNamespaceAndPath(TinkersSpellbooks.MOD_ID, toolName))
@@ -79,9 +83,26 @@ public class ModularGeoItemRenderer<T extends Item & GeoItem> extends GeoItemRen
         this.toolName = toolName;
         this.glowMaterialIndex = glowMaterialIndex;
         this.glowTexture = ResourceLocation.fromNamespaceAndPath(TinkersSpellbooks.MOD_ID, "textures/item/geo/" + toolName + "_glowmask.png");
-        this.useAlternateGuiLighting();
+        this.guiModelLocation = ResourceLocation.fromNamespaceAndPath(TinkersSpellbooks.MOD_ID, "item/" + toolName + "_gui");
         this.addRenderLayer(new GlowLayer(this));
-        LOGGER.debug("[TinkersSpellbooks] Initialized ModularGeoItemRenderer for {} with backface-culled cutout base pass and polygon-offset emissive glow layer (glowMaterialIndex={})", toolName, glowMaterialIndex);
+        LOGGER.debug("[TinkersSpellbooks] Initialized ModularGeoItemRenderer for {} with 2D Tinkers GUI model {} and 3D world GeoModel", toolName, this.guiModelLocation);
+    }
+
+    @Override
+    public void renderByItem(ItemStack stack, ItemDisplayContext transformType, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay) {
+        if (transformType == ItemDisplayContext.GUI) {
+            Minecraft mc = Minecraft.getInstance();
+            BakedModel baseGuiModel = mc.getModelManager().getModel(this.guiModelLocation);
+            BakedModel resolvedGuiModel = baseGuiModel.getOverrides().resolve(baseGuiModel, stack, mc.level, mc.player, 0);
+            if (resolvedGuiModel != null && resolvedGuiModel != mc.getModelManager().getMissingModel() && !resolvedGuiModel.isCustomRenderer()) {
+                poseStack.pushPose();
+                poseStack.translate(0.5F, 0.5F, 0.5F);
+                mc.getItemRenderer().render(stack, ItemDisplayContext.GUI, false, poseStack, bufferSource, packedLight, packedOverlay, resolvedGuiModel);
+                poseStack.popPose();
+                return;
+            }
+        }
+        super.renderByItem(stack, transformType, poseStack, bufferSource, packedLight, packedOverlay);
     }
 
     @Override
