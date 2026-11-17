@@ -155,5 +155,6 @@
   "modifier.tinkers_spellbooks.quick_chant.description": "Grants +6% Cooldown Reduction and +6% Cast Time Reduction per level.",
   "modifier.tinkers_spellbooks.warded_script": "Warded Script",
   "modifier.tinkers_spellbooks.warded_script.flavor": "Deflects hostile magical energies.",
-  "modifier.tinkers_spellbooks.warded_script.description": "Grants +6% Spell Resist per level."
+  "modifier.tinkers_spellbooks.warded_script.description": "Grants +6% Spell Resist per level.",
+  "tooltip.tinkers_spellbooks.modifiers.hands": "When in Main Hand or Off Hand:"
 }

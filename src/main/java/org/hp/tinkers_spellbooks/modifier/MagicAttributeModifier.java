@@ -32,19 +32,17 @@ public class MagicAttributeModifier extends Modifier implements AttributesModifi
 
     @Override
     public void addAttributes(IToolStackView tool, ModifierEntry modifier, EquipmentSlot slot, BiConsumer<Attribute, AttributeModifier> consumer) {
-        if (tool.isBroken() || slot != EquipmentSlot.MAINHAND) {
+        if (tool.isBroken() || slot.getType() != EquipmentSlot.Type.HAND || !(tool.getItem() instanceof ModifiableStaffItem)) {
             return;
         }
-        if (!(tool.getItem() instanceof ModifiableStaffItem) && slot.getType() != EquipmentSlot.Type.HAND) {
-            return;
-        }
+        String slotKey = slot == EquipmentSlot.MAINHAND ? "hand" : "offhand";
         float effectiveLevel = modifier.getEffectiveLevel();
         for (int i = 0; i < this.bonuses.size(); i++) {
             Bonus bonus = this.bonuses.get(i);
             double value = bonus.amountPerLevel() * effectiveLevel;
             if (Math.abs(value) > 1.0E-5) {
-                UUID uuid = UUID.nameUUIDFromBytes((this.getId() + ":hand:" + i).getBytes(StandardCharsets.UTF_8));
-                consumer.accept(bonus.attribute().get(), new AttributeModifier(uuid, this.getId() + "." + i, value, bonus.operation()));
+                UUID uuid = UUID.nameUUIDFromBytes((this.getId() + ":" + slotKey + ":" + i).getBytes(StandardCharsets.UTF_8));
+                consumer.accept(bonus.attribute().get(), new AttributeModifier(uuid, this.getId() + "." + slotKey + "." + i, value, bonus.operation()));
             }
         }
     }

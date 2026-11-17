@@ -18,17 +18,22 @@ import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
+import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import org.hp.tinkers_spellbooks.item.ModifiableSpellbookItem;
 import org.hp.tinkers_spellbooks.item.ModifiableStaffItem;
 import slimeknights.tconstruct.library.client.item.ModifiableItemClientExtension;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
@@ -46,7 +51,7 @@ public final class StaffClientHelper {
             @Override
             public BlockEntityWithoutLevelRenderer getCustomRenderer() {
                 if (this.renderer == null) {
-                    this.renderer = new ModularGeoItemRenderer<ModifiableStaffItem>("arcane_staff", 0);
+                    this.renderer = new ModularGeoItemRenderer<ModifiableStaffItem>("arcane_staff", 0, false);
                 }
                 return this.renderer;
             }
@@ -60,7 +65,7 @@ public final class StaffClientHelper {
             @Override
             public BlockEntityWithoutLevelRenderer getCustomRenderer() {
                 if (this.renderer == null) {
-                    this.renderer = new ModularGeoItemRenderer<ModifiableSpellbookItem>("modular_spellbook", 2);
+                    this.renderer = new ModularGeoItemRenderer<ModifiableSpellbookItem>("modular_spellbook", 2, true);
                 }
                 return this.renderer;
             }
@@ -108,6 +113,62 @@ public final class StaffClientHelper {
             } else {
                 lines.add(Component.literal(" ").append(spellText.withStyle(Style.EMPTY.withColor(0x8888FE))));
             }
+        }
+    }
+
+    public static void onItemTooltip(ItemTooltipEvent event) {
+        if (!(event.getItemStack().getItem() instanceof ModifiableStaffItem)) {
+            return;
+        }
+        List<Component> tooltip = event.getToolTip();
+        int mainHeaderIdx = -1;
+        int offHeaderIdx = -1;
+        for (int i = 0; i < tooltip.size(); i++) {
+            if (tooltip.get(i).getContents() instanceof TranslatableContents contents) {
+                String key = contents.getKey();
+                if ("item.modifiers.mainhand".equals(key)) {
+                    mainHeaderIdx = i;
+                } else if ("item.modifiers.offhand".equals(key)) {
+                    offHeaderIdx = i;
+                }
+            }
+        }
+        if (mainHeaderIdx < 0 || offHeaderIdx < 0 || offHeaderIdx <= mainHeaderIdx) {
+            return;
+        }
+        int mainEnd = offHeaderIdx;
+        if (mainEnd > mainHeaderIdx + 1 && tooltip.get(mainEnd - 1).getString().isEmpty()) {
+            mainEnd--;
+        }
+        Set<String> existingLines = new HashSet<>();
+        for (int i = mainHeaderIdx + 1; i < mainEnd; i++) {
+            existingLines.add(tooltip.get(i).getString());
+        }
+        int offEnd = offHeaderIdx + 1;
+        while (offEnd < tooltip.size()) {
+            Component line = tooltip.get(offEnd);
+            if (line.getString().isEmpty()) {
+                break;
+            }
+            if (line.getContents() instanceof TranslatableContents contents && contents.getKey().startsWith("item.modifiers.")) {
+                break;
+            }
+            offEnd++;
+        }
+        List<Component> extraOffhandLines = new ArrayList<>();
+        for (int i = offHeaderIdx + 1; i < offEnd; i++) {
+            Component line = tooltip.get(i);
+            if (existingLines.add(line.getString())) {
+                extraOffhandLines.add(line);
+            }
+        }
+        tooltip.set(mainHeaderIdx, Component.translatable("tooltip.tinkers_spellbooks.modifiers.hands").withStyle(ChatFormatting.GRAY));
+        int removeStart = (offHeaderIdx > mainHeaderIdx + 1 && tooltip.get(offHeaderIdx - 1).getString().isEmpty())
+                ? offHeaderIdx - 1
+                : offHeaderIdx;
+        tooltip.subList(removeStart, offEnd).clear();
+        if (!extraOffhandLines.isEmpty()) {
+            tooltip.addAll(mainEnd, extraOffhandLines);
         }
     }
 

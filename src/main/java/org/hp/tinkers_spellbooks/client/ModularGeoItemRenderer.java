@@ -74,23 +74,26 @@ public class ModularGeoItemRenderer<T extends Item & GeoItem> extends GeoItemRen
 
     private final String toolName;
     private final int glowMaterialIndex;
+    private final boolean use2dGui;
     private final ResourceLocation glowTexture;
+    @Nullable
     private final ResourceLocation guiModelLocation;
 
-    public ModularGeoItemRenderer(String toolName, int glowMaterialIndex) {
+    public ModularGeoItemRenderer(String toolName, int glowMaterialIndex, boolean use2dGui) {
         super(new DefaultedItemGeoModel<T>(ResourceLocation.fromNamespaceAndPath(TinkersSpellbooks.MOD_ID, toolName))
                 .withAltTexture(ResourceLocation.fromNamespaceAndPath(TinkersSpellbooks.MOD_ID, "geo/" + toolName)));
         this.toolName = toolName;
         this.glowMaterialIndex = glowMaterialIndex;
+        this.use2dGui = use2dGui;
         this.glowTexture = ResourceLocation.fromNamespaceAndPath(TinkersSpellbooks.MOD_ID, "textures/item/geo/" + toolName + "_glowmask.png");
-        this.guiModelLocation = ResourceLocation.fromNamespaceAndPath(TinkersSpellbooks.MOD_ID, "item/" + toolName + "_gui");
+        this.guiModelLocation = use2dGui ? ResourceLocation.fromNamespaceAndPath(TinkersSpellbooks.MOD_ID, "item/" + toolName + "_gui") : null;
         this.addRenderLayer(new GlowLayer(this));
-        LOGGER.debug("[TinkersSpellbooks] Initialized ModularGeoItemRenderer for {} with 2D Tinkers GUI model {} and 3D world GeoModel", toolName, this.guiModelLocation);
+        LOGGER.debug("[TinkersSpellbooks] Initialized ModularGeoItemRenderer for {} (use2dGui={})", toolName, use2dGui);
     }
 
     @Override
     public void renderByItem(ItemStack stack, ItemDisplayContext transformType, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay) {
-        if (transformType == ItemDisplayContext.GUI) {
+        if (this.use2dGui && this.guiModelLocation != null && transformType == ItemDisplayContext.GUI) {
             Minecraft mc = Minecraft.getInstance();
             BakedModel baseGuiModel = mc.getModelManager().getModel(this.guiModelLocation);
             BakedModel resolvedGuiModel = baseGuiModel.getOverrides().resolve(baseGuiModel, stack, mc.level, mc.player, 0);

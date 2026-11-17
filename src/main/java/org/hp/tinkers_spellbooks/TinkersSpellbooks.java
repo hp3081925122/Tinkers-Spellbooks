@@ -9,6 +9,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.hp.tinkers_spellbooks.client.ModularGeoTextureCache;
 import org.hp.tinkers_spellbooks.client.SpellbooksClientSetup;
+import org.hp.tinkers_spellbooks.client.StaffClientHelper;
 import org.hp.tinkers_spellbooks.config.SpellbooksConfig;
 import org.hp.tinkers_spellbooks.event.SpellcastingModEvents;
 import org.hp.tinkers_spellbooks.registry.SpellbookItems;
@@ -32,6 +33,7 @@ public final class TinkersSpellbooks {
             modBus.addListener(SpellbooksClientSetup::onClientSetup);
             modBus.addListener(SpellbooksClientSetup::onRegisterAdditionalModels);
             modBus.addListener(ModularGeoTextureCache::onRegisterReloadListeners);
+            MinecraftForge.EVENT_BUS.addListener(StaffClientHelper::onItemTooltip);
         });
     }
 }

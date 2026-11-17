@@ -20,7 +20,6 @@ public final class SpellbooksClientSetup {
     }
 
     public static void onRegisterAdditionalModels(ModelEvent.RegisterAdditional event) {
-        event.register(ResourceLocation.fromNamespaceAndPath(TinkersSpellbooks.MOD_ID, "item/arcane_staff_gui"));
         event.register(ResourceLocation.fromNamespaceAndPath(TinkersSpellbooks.MOD_ID, "item/modular_spellbook_gui"));
     }
 

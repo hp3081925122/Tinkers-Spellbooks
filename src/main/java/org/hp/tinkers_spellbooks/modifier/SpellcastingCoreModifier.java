@@ -33,6 +33,10 @@ public class SpellcastingCoreModifier extends NoLevelsModifier implements RawDat
     private static final UUID STAFF_MAX_MANA_UUID = UUID.fromString("92f3b5c1-44d1-4a7a-9b11-10d4f8a10002");
     private static final UUID STAFF_COOLDOWN_UUID = UUID.fromString("92f3b5c1-44d1-4a7a-9b11-10d4f8a10003");
     private static final UUID STAFF_CAST_TIME_UUID = UUID.fromString("92f3b5c1-44d1-4a7a-9b11-10d4f8a10004");
+    private static final UUID STAFF_OFFHAND_SPELL_POWER_UUID = UUID.fromString("92f3b5c1-44d1-4a7a-9b11-10d4f8a20001");
+    private static final UUID STAFF_OFFHAND_MAX_MANA_UUID = UUID.fromString("92f3b5c1-44d1-4a7a-9b11-10d4f8a20002");
+    private static final UUID STAFF_OFFHAND_COOLDOWN_UUID = UUID.fromString("92f3b5c1-44d1-4a7a-9b11-10d4f8a20003");
+    private static final UUID STAFF_OFFHAND_CAST_TIME_UUID = UUID.fromString("92f3b5c1-44d1-4a7a-9b11-10d4f8a20004");
 
     @Override
     public boolean shouldDisplay(boolean advanced) {
@@ -74,10 +78,14 @@ public class SpellcastingCoreModifier extends NoLevelsModifier implements RawDat
 
     @Override
     public void addAttributes(IToolStackView tool, ModifierEntry modifier, EquipmentSlot slot, BiConsumer<Attribute, AttributeModifier> consumer) {
-        if (tool.isBroken() || slot != EquipmentSlot.MAINHAND || !(tool.getItem() instanceof ModifiableStaffItem)) {
+        if (tool.isBroken() || slot.getType() != EquipmentSlot.Type.HAND || !(tool.getItem() instanceof ModifiableStaffItem)) {
             return;
         }
-        applyToolMagicStats(tool.getStats(), "tinkers_spellbooks.staff", STAFF_SPELL_POWER_UUID, STAFF_MAX_MANA_UUID, STAFF_COOLDOWN_UUID, STAFF_CAST_TIME_UUID, consumer);
+        if (slot == EquipmentSlot.MAINHAND) {
+            applyToolMagicStats(tool.getStats(), "tinkers_spellbooks.staff", STAFF_SPELL_POWER_UUID, STAFF_MAX_MANA_UUID, STAFF_COOLDOWN_UUID, STAFF_CAST_TIME_UUID, consumer);
+        } else {
+            applyToolMagicStats(tool.getStats(), "tinkers_spellbooks.staff_offhand", STAFF_OFFHAND_SPELL_POWER_UUID, STAFF_OFFHAND_MAX_MANA_UUID, STAFF_OFFHAND_COOLDOWN_UUID, STAFF_OFFHAND_CAST_TIME_UUID, consumer);
+        }
     }
 
     @Override

@@ -155,5 +155,6 @@
   "modifier.tinkers_spellbooks.quick_chant.description": "每级提升 +6% 冷却缩减与 +6% 吟唱缩减。",
   "modifier.tinkers_spellbooks.warded_script": "护法铭文",
   "modifier.tinkers_spellbooks.warded_script.flavor": "偏折侵袭而来的异种魔力。",
-  "modifier.tinkers_spellbooks.warded_script.description": "每级提升 +6% 法术抗性。"
+  "modifier.tinkers_spellbooks.warded_script.description": "每级提升 +6% 法术抗性。",
+  "tooltip.tinkers_spellbooks.modifiers.hands": "在主手或副手时："
 }
