@@ -1,0 +1,9 @@
+{
+  "type": "tconstruct:table_casting_material",
+  "cast": {
+    "tag": "tinkers_spellbooks:casts/single_use/book_cover"
+  },
+  "cast_consumed": true,
+  "item_cost": 2,
+  "result": "tinkers_spellbooks:book_cover"
+}

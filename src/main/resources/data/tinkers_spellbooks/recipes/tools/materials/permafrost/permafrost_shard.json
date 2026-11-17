@@ -1,0 +1,9 @@
+{
+  "type": "tconstruct:material",
+  "ingredient": {
+    "item": "irons_spellbooks:permafrost_shard"
+  },
+  "material": "tinkers_spellbooks:permafrost",
+  "needed": 1,
+  "value": 1
+}

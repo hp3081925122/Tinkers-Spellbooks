@@ -1,0 +1,176 @@
+buildscript {
+    repositories {
+        maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
+    }
+}
+
+plugins {
+    id 'eclipse'
+    id 'idea'
+    id 'maven-publish'
+    id 'net.minecraftforge.gradle' version '[6.0,6.2)'
+}
+
+apply plugin: 'org.spongepowered.mixin'
+
+def mcpJarDir = file('E:/模组/我的世界mcp的jar')
+def mcpJarName = 'minecraft-mcp-1.20.1-forge-v0.4.20'
+def selfMcpJarDir = file('E:/模组/自用工具源码+产物/Minecraft Self MCP/Minecraft Self MCP-1.20.1-Forge/build/libs')
+def selfMcpJarName = 'self_mcp-1.20.1-forge-0.3.0'
+
+repositories {
+    maven {
+        url = 'https://www.cursemaven.com'
+        content {
+            includeGroup 'curse.maven'
+        }
+    }
+    flatDir {
+        dirs mcpJarDir
+        content {
+            includeGroup 'local'
+        }
+    }
+    flatDir {
+        dirs selfMcpJarDir
+        content {
+            includeGroup 'local'
+        }
+    }
+}
+
+version = project.mod_version
+group = project.mod_group_id
+
+base {
+    archivesName = "${project.mod_id}-${project.minecraft_version}-forge"
+}
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+
+minecraft {
+    mappings channel: project.mapping_channel, version: project.mapping_version
+    copyIdeResources = true
+
+    runs {
+        configureEach {
+            workingDirectory project.file('run')
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+            args '-mixin.config=tinkers_spellbooks.mixins.json'
+
+            mods {
+                "${project.mod_id}" {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        client {
+            property 'forge.enabledGameTestNamespaces', project.mod_id
+        }
+
+        server {
+            args '--nogui'
+        }
+
+        gameTestServer {
+            property 'forge.enabledGameTestNamespaces', project.mod_id
+        }
+
+        data {
+            workingDirectory project.file('run-data')
+            args '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+        }
+    }
+}
+
+sourceSets.main.resources { srcDir 'src/generated/resources' }
+
+mixin {
+    add sourceSets.main, "${mod_id}.refmap.json"
+    config "${mod_id}.mixins.json"
+}
+
+dependencies {
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+    minecraft "net.minecraftforge:forge:${project.minecraft_version}-${project.forge_version}"
+
+    implementation fg.deobf("curse.maven:mantle-74924:${project.mantle_curseforge_file_id}")
+    implementation fg.deobf("curse.maven:tinkers-construct-74072:${project.tconstruct_curseforge_file_id}")
+    implementation fg.deobf("curse.maven:irons-spells-n-spellbooks-855414:${project.irons_spellbooks_curseforge_file_id}")
+    implementation fg.deobf("curse.maven:curios-309927:${project.curios_curseforge_file_id}")
+    implementation fg.deobf("curse.maven:irons-lib-1492763:${project.irons_lib_curseforge_file_id}")
+    implementation fg.deobf("curse.maven:geckolib-388172:${project.geckolib_curseforge_file_id}")
+    implementation fg.deobf("curse.maven:playeranimator-658587:${project.playeranimator_curseforge_file_id}")
+
+    implementation fg.deobf("curse.maven:jei-238222:8778011")
+    implementation fg.deobf("curse.maven:just-enough-characters-250702:8771525")
+    implementation fg.deobf("curse.maven:jade-324717:8479276")
+
+    if (!project.hasProperty('skipMcp') && new File(mcpJarDir, mcpJarName + '.jar').exists()) {
+        runtimeOnly fg.deobf("local:${mcpJarName}:0.4.20")
+    }
+    if (new File(selfMcpJarDir, selfMcpJarName + '.jar').exists()) {
+        runtimeOnly fg.deobf("local:${selfMcpJarName}:0.3.0")
+    }
+}
+
+tasks.named('processResources', ProcessResources).configure {
+    def replaceProperties = [
+            minecraft_version: project.minecraft_version,
+            minecraft_version_range: project.minecraft_version_range,
+            forge_version: project.forge_version,
+            forge_version_range: project.forge_version_range,
+            loader_version_range: project.loader_version_range,
+            mod_id: project.mod_id,
+            mod_name: project.mod_name,
+            mod_license: project.mod_license,
+            mod_version: project.mod_version,
+            mod_authors: project.mod_authors,
+            mod_description: project.mod_description
+    ]
+    inputs.properties replaceProperties
+
+    filesMatching(['META-INF/mods.toml', 'pack.mcmeta']) {
+        expand replaceProperties + [project: project]
+    }
+}
+
+tasks.named('jar', Jar).configure {
+    manifest {
+        attributes([
+                'Specification-Title': project.mod_id,
+                'Specification-Vendor': project.mod_authors,
+                'Specification-Version': '1',
+                'Implementation-Title': project.name,
+                'Implementation-Version': project.jar.archiveVersion,
+                'Implementation-Vendor': project.mod_authors,
+                'MixinConfigs': 'tinkers_spellbooks.mixins.json'
+        ])
+    }
+    finalizedBy 'reobfJar'
+}
+
+publishing {
+    publications {
+        register('mavenJava', MavenPublication) {
+            artifact jar
+        }
+    }
+    repositories {
+        maven {
+            url "file://${project.projectDir}/mcmodsrepo"
+        }
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}

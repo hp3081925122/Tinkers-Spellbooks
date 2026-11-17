@@ -1,0 +1,17 @@
+{
+  "replace": false,
+  "values": [
+    "tinkers_spellbooks:fire_focus",
+    "tinkers_spellbooks:ice_focus",
+    "tinkers_spellbooks:lightning_focus",
+    "tinkers_spellbooks:holy_focus",
+    "tinkers_spellbooks:ender_focus",
+    "tinkers_spellbooks:blood_focus",
+    "tinkers_spellbooks:evocation_focus",
+    "tinkers_spellbooks:nature_focus",
+    "tinkers_spellbooks:eldritch_focus",
+    "tinkers_spellbooks:mana_reservoir",
+    "tinkers_spellbooks:quick_chant",
+    "tinkers_spellbooks:warded_script"
+  ]
+}

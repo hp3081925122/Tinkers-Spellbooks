@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "tinkers_spellbooks:item/cast/staff_handle_red_sand_cast"
+  }
+}

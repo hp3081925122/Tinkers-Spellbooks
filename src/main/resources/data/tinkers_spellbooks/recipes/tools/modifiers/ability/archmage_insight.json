@@ -1,0 +1,23 @@
+{
+  "type": "tconstruct:modifier",
+  "allow_crystal": true,
+  "inputs": [
+    {
+      "item": "irons_spellbooks:arcane_salvage"
+    },
+    {
+      "item": "irons_spellbooks:cinder_essence"
+    },
+    {
+      "item": "irons_spellbooks:cinder_essence"
+    }
+  ],
+  "level": 1,
+  "result": "tinkers_spellbooks:archmage_insight",
+  "slots": {
+    "abilities": 1
+  },
+  "tools": {
+    "tag": "tinkers_spellbooks:modifiable/spellcasting"
+  }
+}

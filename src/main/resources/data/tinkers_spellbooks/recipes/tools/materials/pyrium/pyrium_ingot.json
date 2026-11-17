@@ -1,0 +1,9 @@
+{
+  "type": "tconstruct:material",
+  "ingredient": {
+    "item": "irons_spellbooks:pyrium_ingot"
+  },
+  "material": "tinkers_spellbooks:pyrium",
+  "needed": 1,
+  "value": 1
+}

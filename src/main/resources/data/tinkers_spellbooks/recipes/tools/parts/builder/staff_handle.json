@@ -1,0 +1,16 @@
+{
+  "type": "tconstruct:part_builder",
+  "cost": 2,
+  "pattern": "tinkers_spellbooks:staff_handle",
+  "pattern_item": [
+    {
+      "tag": "tconstruct:patterns/default"
+    },
+    {
+      "item": "tinkers_spellbooks:staff_handle_cast"
+    }
+  ],
+  "result": {
+    "item": "tinkers_spellbooks:staff_handle"
+  }
+}

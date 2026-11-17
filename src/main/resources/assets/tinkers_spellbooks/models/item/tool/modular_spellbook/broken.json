@@ -1,0 +1,27 @@
+{
+  "loader": "tconstruct:tool",
+  "parent": "forge:item/default",
+  "textures": {
+    "book_cover": "tinkers_spellbooks:item/tool/modular_spellbook/book_cover_broken",
+    "spell_pages": "tinkers_spellbooks:item/tool/modular_spellbook/spell_pages",
+    "arcane_binding": "tinkers_spellbooks:item/tool/modular_spellbook/arcane_binding"
+  },
+  "modifier_roots": [
+    "tinkers_spellbooks:item/tool/modular_spellbook/modifiers/broken/",
+    "tinkers_spellbooks:item/tool/modular_spellbook/modifiers/"
+  ],
+  "parts": [
+    {
+      "name": "book_cover",
+      "index": 0
+    },
+    {
+      "name": "spell_pages",
+      "index": 1
+    },
+    {
+      "name": "arcane_binding",
+      "index": 2
+    }
+  ]
+}

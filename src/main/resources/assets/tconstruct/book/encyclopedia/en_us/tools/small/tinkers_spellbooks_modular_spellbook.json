@@ -1,0 +1,15 @@
+{
+  "tool": "tinkers_spellbooks:modular_spellbook",
+  "text": [
+    {
+      "text": "A modular spellbook worn in the Curios spellbook slot. Supports inscribing and managing spells at both the Inscription Table and Arcane Anvil, with dynamic slot capacity."
+    }
+  ],
+  "properties": [
+    "Equips in Spellbook Curio Slot",
+    "+20 Base Max Mana",
+    "+3% Base Spell Power",
+    "Inscription Table & Arcane Anvil Ready",
+    "3 Upgrade Slots / 1 Ability Slot"
+  ]
+}

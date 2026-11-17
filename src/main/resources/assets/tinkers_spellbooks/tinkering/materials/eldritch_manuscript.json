@@ -1,0 +1,35 @@
+{
+  "color": "FF2D8A78",
+  "fallbacks": [
+    "cloth",
+    "primitive"
+  ],
+  "generator": {
+    "supported_stats": [
+      "tconstruct:head",
+      "tconstruct:handle",
+      "tconstruct:binding",
+      "tconstruct:repair_kit",
+      "tinkers_spellbooks:staff_head",
+      "tinkers_spellbooks:staff_handle",
+      "tinkers_spellbooks:book_cover",
+      "tinkers_spellbooks:spell_pages",
+      "tinkers_spellbooks:arcane_binding"
+    ],
+    "transformer": {
+      "type": "tconstruct:recolor_sprite",
+      "color_mapping": {
+        "type": "tconstruct:grey_to_color",
+        "palette": {
+          "000": "FF071F1C",
+          "063": "FF0F3D37",
+          "102": "FF196157",
+          "140": "FF258778",
+          "178": "FF38B09C",
+          "216": "FF6AD6C1",
+          "255": "FFB5F5E6"
+        }
+      }
+    }
+  }
+}

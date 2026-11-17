@@ -1,0 +1,31 @@
+{
+  "type": "tconstruct:modifier",
+  "allow_crystal": true,
+  "inputs": [
+    {
+      "item": "irons_spellbooks:magic_cloth"
+    },
+    {
+      "item": "irons_spellbooks:arcane_ingot"
+    },
+    {
+      "item": "irons_spellbooks:magic_cloth"
+    },
+    {
+      "item": "irons_spellbooks:arcane_essence"
+    },
+    {
+      "item": "irons_spellbooks:arcane_essence"
+    }
+  ],
+  "level": {
+    "max": 2
+  },
+  "result": "tinkers_spellbooks:grimoire_expansion",
+  "slots": {
+    "abilities": 1
+  },
+  "tools": {
+    "tag": "tinkers_spellbooks:modifiable/spellcasting"
+  }
+}

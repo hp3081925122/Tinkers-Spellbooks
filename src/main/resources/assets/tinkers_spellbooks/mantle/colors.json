@@ -1,0 +1,43 @@
+{
+  "modifier.tinkers_spellbooks": {
+    "spellcasting_core": "#B968FF",
+    "mana_weave": "#63C5FF",
+    "tough_hide": "#B87D56",
+    "arcane_resonance": "#52B8FF",
+    "cryomancy": "#8BE8FF",
+    "hemomancy": "#C92A3E",
+    "sanctity": "#FFF099",
+    "mithril_channeling": "#A6F7E2",
+    "pyromancy": "#FF6B2B",
+    "ender_mastery": "#C75EFF",
+    "eldritch_insight": "#2D8A78",
+    "grimoire_expansion": "#FFD54F",
+    "arcane_overdrive": "#BF55EC",
+    "archmage_insight": "#FFE066",
+    "fire_focus": "#FF7B29",
+    "ice_focus": "#88E2FF",
+    "lightning_focus": "#55FFFF",
+    "holy_focus": "#FFF5A8",
+    "ender_focus": "#D56BFF",
+    "blood_focus": "#B81D2A",
+    "evocation_focus": "#E8E8E8",
+    "nature_focus": "#63E05A",
+    "eldritch_focus": "#2D8A78",
+    "mana_reservoir": "#47C8FF",
+    "quick_chant": "#70F0A8",
+    "warded_script": "#9FA8DA"
+  },
+  "material.tinkers_spellbooks": {
+    "arcane_cloth": "#4A78D6",
+    "hogskin": "#B87D56",
+    "frosted_helve": "#8BE8FF",
+    "arcane_ingot": "#52B8FF",
+    "bloody_vellum": "#C92A3E",
+    "divine_pearl": "#FFF099",
+    "permafrost": "#63D8FF",
+    "mithril": "#A6F7E2",
+    "pyrium": "#FF6B2B",
+    "dragonskin": "#C75EFF",
+    "eldritch_manuscript": "#2D8A78"
+  }
+}

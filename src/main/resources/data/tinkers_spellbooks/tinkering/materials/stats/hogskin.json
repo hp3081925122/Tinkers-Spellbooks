@@ -1,0 +1,46 @@
+{
+  "stats": {
+    "tinkers_spellbooks:staff_head": {
+      "durability": 210,
+      "melee_attack": 2.0,
+      "spell_power": 0.04,
+      "spell_slots": 1.0
+    },
+    "tinkers_spellbooks:staff_handle": {
+      "durability": 0.15,
+      "melee_speed": 0.0,
+      "cooldown_reduction": 0.03,
+      "cast_time_reduction": 0.02
+    },
+    "tinkers_spellbooks:book_cover": {
+      "durability": 280,
+      "max_mana": 45.0,
+      "spell_power": 0.04,
+      "cooldown_reduction": 0.03
+    },
+    "tinkers_spellbooks:spell_pages": {
+      "spell_slots": 5.0,
+      "max_mana": 25.0,
+      "cast_time_reduction": 0.03
+    },
+    "tinkers_spellbooks:arcane_binding": {
+      "max_mana": 25.0,
+      "spell_power": 0.02,
+      "cooldown_reduction": 0.03
+    },
+    "tconstruct:head": {
+      "durability": 210,
+      "melee_attack": 2.0,
+      "mining_speed": 5.5,
+      "mining_tier": "minecraft:iron"
+    },
+    "tconstruct:handle": {
+      "durability": 0.15,
+      "melee_damage": 0.05,
+      "melee_speed": 0.0,
+      "mining_speed": 0.05
+    },
+    "tconstruct:binding": {},
+    "tconstruct:maille": {}
+  }
+}

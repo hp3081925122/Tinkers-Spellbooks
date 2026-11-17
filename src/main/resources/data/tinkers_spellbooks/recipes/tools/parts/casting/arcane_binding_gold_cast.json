@@ -1,0 +1,8 @@
+{
+  "type": "tconstruct:table_casting_material",
+  "cast": {
+    "tag": "tinkers_spellbooks:casts/multi_use/arcane_binding"
+  },
+  "item_cost": 1,
+  "result": "tinkers_spellbooks:arcane_binding"
+}

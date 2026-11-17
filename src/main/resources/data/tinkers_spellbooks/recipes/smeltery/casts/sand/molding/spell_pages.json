@@ -1,0 +1,11 @@
+{
+  "type": "tconstruct:molding_table",
+  "material": {
+    "tag": "tconstruct:casts/sand"
+  },
+  "pattern": {
+    "type": "tconstruct:material",
+    "item": "tinkers_spellbooks:spell_pages"
+  },
+  "result": "tinkers_spellbooks:spell_pages_sand_cast"
+}

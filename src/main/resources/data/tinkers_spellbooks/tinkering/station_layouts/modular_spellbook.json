@@ -1,0 +1,37 @@
+{
+  "icon": {
+    "item": "tinkers_spellbooks:modular_spellbook",
+    "nbt": "{Damage:0,tic_broken:0b,tic_display:1b,tic_materials:[\"tconstruct:ui_render#head\",\"tconstruct:ui_render#handle\",\"tconstruct:ui_render#extra\"]}"
+  },
+  "input_slots": [
+    {
+      "filter": {
+        "item": "tinkers_spellbooks:book_cover"
+      },
+      "icon": "tinkers_spellbooks:book_cover",
+      "translation_key": "item.tinkers_spellbooks.book_cover",
+      "x": 19,
+      "y": 41
+    },
+    {
+      "filter": {
+        "item": "tinkers_spellbooks:spell_pages"
+      },
+      "icon": "tinkers_spellbooks:spell_pages",
+      "translation_key": "item.tinkers_spellbooks.spell_pages",
+      "x": 45,
+      "y": 25
+    },
+    {
+      "filter": {
+        "item": "tinkers_spellbooks:arcane_binding"
+      },
+      "icon": "tinkers_spellbooks:arcane_binding",
+      "translation_key": "item.tinkers_spellbooks.arcane_binding",
+      "x": 45,
+      "y": 53
+    }
+  ],
+  "sortIndex": 15,
+  "translation_key": "item.tinkers_spellbooks.modular_spellbook"
+}

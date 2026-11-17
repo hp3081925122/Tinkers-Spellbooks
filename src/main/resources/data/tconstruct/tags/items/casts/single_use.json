@@ -1,0 +1,15 @@
+{
+  "replace": false,
+  "values": [
+    "tinkers_spellbooks:staff_head_sand_cast",
+    "tinkers_spellbooks:staff_handle_sand_cast",
+    "tinkers_spellbooks:book_cover_sand_cast",
+    "tinkers_spellbooks:spell_pages_sand_cast",
+    "tinkers_spellbooks:arcane_binding_sand_cast",
+    "tinkers_spellbooks:staff_head_red_sand_cast",
+    "tinkers_spellbooks:staff_handle_red_sand_cast",
+    "tinkers_spellbooks:book_cover_red_sand_cast",
+    "tinkers_spellbooks:spell_pages_red_sand_cast",
+    "tinkers_spellbooks:arcane_binding_red_sand_cast"
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "type": "tconstruct:material",
+  "ingredient": {
+    "item": "irons_spellbooks:frosted_helve"
+  },
+  "material": "tinkers_spellbooks:frosted_helve",
+  "needed": 1,
+  "value": 2
+}

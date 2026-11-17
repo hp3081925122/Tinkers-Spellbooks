@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "tinkers_spellbooks:staff_head_cast",
+    "tinkers_spellbooks:staff_handle_cast",
+    "tinkers_spellbooks:book_cover_cast",
+    "tinkers_spellbooks:spell_pages_cast",
+    "tinkers_spellbooks:arcane_binding_cast"
+  ]
+}

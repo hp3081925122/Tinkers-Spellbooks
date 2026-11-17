@@ -1,0 +1,15 @@
+{
+  "tool": "tinkers_spellbooks:arcane_staff",
+  "text": [
+    {
+      "text": "A modular thaumaturgic staff. Grants magical attributes in the main hand and casts your selected spell on right-click. Can be imbued with scrolls and upgrade orbs at an Arcane Anvil."
+    }
+  ],
+  "properties": [
+    "Right-click to cast spells",
+    "+5% Base Spell Power",
+    "150% Durability Multiplier",
+    "Supports Arcane Anvil Imbuing & Orbs",
+    "3 Upgrade Slots / 1 Ability Slot"
+  ]
+}
