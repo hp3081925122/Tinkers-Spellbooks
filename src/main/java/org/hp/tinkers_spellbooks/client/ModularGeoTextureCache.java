@@ -3,7 +3,9 @@ package org.hp.tinkers_spellbooks.client;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.mojang.blaze3d.platform.NativeImage;
+import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
+import org.slf4j.Logger;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.Resource;
@@ -32,6 +34,7 @@ import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
 public final class ModularGeoTextureCache {
+    private static final Logger LOGGER = LogUtils.getLogger();
     private static final MaterialVariantId DEFAULT_STAFF_HEAD = new MaterialId(TinkersSpellbooks.MOD_ID, "pyrium");
     private static final MaterialVariantId DEFAULT_STAFF_HANDLE = new MaterialId("tconstruct", "wood");
     private static final MaterialVariantId DEFAULT_STAFF_BINDING = new MaterialId(TinkersSpellbooks.MOD_ID, "arcane_ingot");
@@ -100,6 +103,7 @@ public final class ModularGeoTextureCache {
             return fallback;
         }
         TEXTURE_CACHE.put(rawKey, generated);
+        LOGGER.debug("[TinkersSpellbooks] Synthesized dynamic 64x64 Geo texture {} for key={}", generated, rawKey);
         return generated;
     }
 
