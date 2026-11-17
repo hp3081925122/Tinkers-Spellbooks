@@ -7,6 +7,7 @@ import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import org.hp.tinkers_spellbooks.client.ModularGeoTextureCache;
 import org.hp.tinkers_spellbooks.client.SpellbooksClientSetup;
 import org.hp.tinkers_spellbooks.config.SpellbooksConfig;
 import org.hp.tinkers_spellbooks.event.SpellcastingModEvents;
@@ -27,6 +28,9 @@ public final class TinkersSpellbooks {
         SpellbookModifiers.register(modBus);
         modBus.addListener(MaterialFallbackGenerator::registerStatTypes);
         MinecraftForge.EVENT_BUS.register(SpellcastingModEvents.class);
-        DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> modBus.addListener(SpellbooksClientSetup::onClientSetup));
+        DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
+            modBus.addListener(SpellbooksClientSetup::onClientSetup);
+            modBus.addListener(ModularGeoTextureCache::onRegisterReloadListeners);
+        });
     }
 }

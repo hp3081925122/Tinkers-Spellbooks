@@ -1,0 +1,176 @@
+{
+	"format_version": "1.12.0",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.modular_spellbook",
+				"texture_width": 64,
+				"texture_height": 64,
+				"visible_bounds_width": 2,
+				"visible_bounds_height": 1.5,
+				"visible_bounds_offset": [0, 0.25, 0]
+			},
+			"bones": [
+				{
+					"name": "root",
+					"pivot": [0, 0, 0]
+				},
+				{
+					"name": "book_cover",
+					"parent": "root",
+					"pivot": [0, 0, 0],
+					"cubes": [
+						{
+							"origin": [-3.5, -5, -2],
+							"size": [7, 10, 1],
+							"uv": {
+								"north": {"uv": [0, 0], "uv_size": [7, 10]},
+								"east": {"uv": [16, 0], "uv_size": [1, 10]},
+								"south": {"uv": [19, 0], "uv_size": [7, 10]},
+								"west": {"uv": [0, 12], "uv_size": [1, 10]},
+								"up": {"uv": [10, 13], "uv_size": [-7, -1]},
+								"down": {"uv": [10, 14], "uv_size": [-7, -1]}
+							}
+						},
+						{
+							"origin": [-3.5, -5, 1],
+							"size": [7, 10, 1],
+							"uv": {
+								"north": {"uv": [19, 0], "uv_size": [7, 10]},
+								"east": {"uv": [17, 0], "uv_size": [1, 10]},
+								"south": {"uv": [8, 0], "uv_size": [7, 10]},
+								"west": {"uv": [1, 12], "uv_size": [1, 10]},
+								"up": {"uv": [10, 13], "uv_size": [-7, -1]},
+								"down": {"uv": [10, 14], "uv_size": [-7, -1]}
+							}
+						},
+						{
+							"origin": [-3.5, -5, -1],
+							"size": [1, 10, 2],
+							"uv": {
+								"east": {"uv": [16, 0], "uv_size": [2, 10]},
+								"west": {"uv": [20, 0], "uv_size": [2, 10]},
+								"up": {"uv": [17, 2], "uv_size": [-1, -2]},
+								"down": {"uv": [17, 10], "uv_size": [-1, -2]}
+							}
+						}
+					]
+				},
+				{
+					"name": "spell_pages",
+					"parent": "root",
+					"pivot": [0, 0, 0],
+					"cubes": [
+						{
+							"origin": [-2.5, -4.5, -1],
+							"size": [5.6, 9, 2],
+							"uv": {
+								"west": {"uv": [32, 0], "uv_size": [2, 9]},
+								"up": {"uv": [41, 2], "uv_size": [-6, -2]},
+								"down": {"uv": [41, 5], "uv_size": [-6, -2]}
+							}
+						}
+					]
+				},
+				{
+					"name": "bookmark",
+					"parent": "spell_pages",
+					"pivot": [0.5, -4, 0],
+					"cubes": [
+						{
+							"origin": [0.2, -7.8, -0.3],
+							"size": [2, 4, 0],
+							"uv": {
+								"north": {"uv": [42, 0], "uv_size": [2, 4]},
+								"south": {"uv": [44, 0], "uv_size": [-2, 4]}
+							}
+						}
+					]
+				},
+				{
+					"name": "arcane_binding",
+					"parent": "root",
+					"pivot": [0, 0, 0],
+					"cubes": [
+						{
+							"origin": [-3.5, -5, -2],
+							"size": [7, 10, 1],
+							"inflate": 0.06,
+							"uv": {
+								"north": {"uv": [0, 32], "uv_size": [7, 10]},
+								"west": {"uv": [0, 32], "uv_size": [1, 10]},
+								"up": {"uv": [7, 33], "uv_size": [-7, -1]},
+								"down": {"uv": [7, 42], "uv_size": [-7, -1]}
+							}
+						},
+						{
+							"origin": [-3.5, -5, 1],
+							"size": [7, 10, 1],
+							"inflate": 0.06,
+							"uv": {
+								"south": {"uv": [15, 32], "uv_size": [-7, 10]},
+								"west": {"uv": [8, 32], "uv_size": [1, 10]},
+								"up": {"uv": [15, 33], "uv_size": [-7, -1]},
+								"down": {"uv": [15, 42], "uv_size": [-7, -1]}
+							}
+						},
+						{
+							"origin": [-3.65, 2, -2.12],
+							"size": [1.35, 1, 4.24],
+							"uv": {
+								"north": {"uv": [16, 32], "uv_size": [1, 1]},
+								"east": {"uv": [16, 32], "uv_size": [4, 1]},
+								"south": {"uv": [19, 32], "uv_size": [1, 1]},
+								"up": {"uv": [20, 34], "uv_size": [-4, -1]},
+								"down": {"uv": [20, 35], "uv_size": [-4, -1]}
+							}
+						},
+						{
+							"origin": [-3.65, -3, -2.12],
+							"size": [1.35, 1, 4.24],
+							"uv": {
+								"north": {"uv": [16, 32], "uv_size": [1, 1]},
+								"east": {"uv": [16, 32], "uv_size": [4, 1]},
+								"south": {"uv": [19, 32], "uv_size": [1, 1]},
+								"up": {"uv": [20, 34], "uv_size": [-4, -1]},
+								"down": {"uv": [20, 35], "uv_size": [-4, -1]}
+							}
+						},
+						{
+							"origin": [2.8, -0.8, -2.15],
+							"size": [0.88, 1.6, 4.3],
+							"uv": {
+								"north": {"uv": [22, 32], "uv_size": [1, 2]},
+								"south": {"uv": [18, 32], "uv_size": [1, 2]},
+								"west": {"uv": [16, 32], "uv_size": [4, 2]},
+								"up": {"uv": [17, 36], "uv_size": [-1, -4]},
+								"down": {"uv": [20, 36], "uv_size": [-1, -4]}
+							}
+						}
+					]
+				},
+				{
+					"name": "cover_sigil",
+					"parent": "arcane_binding",
+					"pivot": [0, 0.5, -2.15],
+					"cubes": [
+						{
+							"origin": [-0.85, -0.35, -2.3],
+							"size": [1.7, 1.7, 0.3],
+							"pivot": [0, 0.5, -2.15],
+							"rotation": [0, 0, 45],
+							"uv": {
+								"north": {"uv": [22, 32], "uv_size": [2, 2]},
+								"east": {"uv": [22, 32], "uv_size": [1, 2]},
+								"south": {"uv": [22, 32], "uv_size": [2, 2]},
+								"west": {"uv": [23, 32], "uv_size": [1, 2]},
+								"up": {"uv": [24, 33], "uv_size": [-2, -1]},
+								"down": {"uv": [24, 34], "uv_size": [-2, -1]}
+							}
+						}
+					]
+				}
+			]
+		}
+	]
+}

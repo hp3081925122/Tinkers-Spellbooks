@@ -14,6 +14,7 @@ import io.redspace.ironsspellbooks.util.TooltipsUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
@@ -22,6 +23,8 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
+import org.hp.tinkers_spellbooks.item.ModifiableSpellbookItem;
+import org.hp.tinkers_spellbooks.item.ModifiableStaffItem;
 import slimeknights.tconstruct.library.client.item.ModifiableItemClientExtension;
 
 import javax.annotation.Nullable;
@@ -32,10 +35,34 @@ import java.util.stream.Collectors;
 public final class StaffClientHelper {
     public static void initStaffClient(Consumer<IClientItemExtensions> consumer) {
         consumer.accept(new ModifiableItemClientExtension() {
+            private BlockEntityWithoutLevelRenderer renderer;
+
             @Override
             @Nullable
             public HumanoidModel.ArmPose getArmPose(LivingEntity entityLiving, InteractionHand hand, ItemStack itemStack) {
                 return StaffArmPose.STAFF_ARM_POS;
+            }
+
+            @Override
+            public BlockEntityWithoutLevelRenderer getCustomRenderer() {
+                if (this.renderer == null) {
+                    this.renderer = new ModularGeoItemRenderer<ModifiableStaffItem>("arcane_staff", 0);
+                }
+                return this.renderer;
+            }
+        });
+    }
+
+    public static void initSpellbookClient(Consumer<IClientItemExtensions> consumer) {
+        consumer.accept(new IClientItemExtensions() {
+            private BlockEntityWithoutLevelRenderer renderer;
+
+            @Override
+            public BlockEntityWithoutLevelRenderer getCustomRenderer() {
+                if (this.renderer == null) {
+                    this.renderer = new ModularGeoItemRenderer<ModifiableSpellbookItem>("modular_spellbook", 2);
+                }
+                return this.renderer;
             }
         });
     }

@@ -1,34 +1,46 @@
 {
-  "loader": "tconstruct:tool",
-  "parent": "tconstruct:item/base/staff",
-  "textures": {
-    "staff_handle": "tinkers_spellbooks:item/tool/arcane_staff/staff_handle",
-    "staff_head": "tinkers_spellbooks:item/tool/arcane_staff/staff_head",
-    "arcane_binding": "tinkers_spellbooks:item/tool/arcane_staff/arcane_binding"
-  },
-  "modifier_roots": [
-    "tinkers_spellbooks:item/tool/arcane_staff/modifiers/"
-  ],
-  "parts": [
-    {
-      "name": "staff_handle",
-      "index": 1
+  "parent": "minecraft:builtin/entity",
+  "gui_light": "front",
+  "display": {
+    "thirdperson_righthand": {
+      "rotation": [0, 0, 0],
+      "translation": [0, -1.5, 1.25],
+      "scale": [0.95, 0.95, 0.95]
     },
-    {
-      "name": "staff_head",
-      "index": 0
+    "thirdperson_lefthand": {
+      "rotation": [0, 0, 0],
+      "translation": [0, -1.5, 1.25],
+      "scale": [0.95, 0.95, 0.95]
     },
-    {
-      "name": "arcane_binding",
-      "index": 2
+    "firstperson_righthand": {
+      "rotation": [-10, 15, 0],
+      "translation": [1.5, -3.25, -2.75],
+      "scale": [0.85, 0.85, 0.85]
+    },
+    "firstperson_lefthand": {
+      "rotation": [-10, -15, 0],
+      "translation": [1.5, -3.25, -2.75],
+      "scale": [0.85, 0.85, 0.85]
+    },
+    "ground": {
+      "rotation": [0, 0, 0],
+      "translation": [0, 7.5, 0],
+      "scale": [0.5, 0.5, 0.5]
+    },
+    "gui": {
+      "rotation": [-13, 128, 65],
+      "translation": [0.25, -0.5, 0],
+      "scale": [0.52, 0.52, 0.52]
+    },
+    "fixed": {
+      "rotation": [0, 0, -45],
+      "translation": [0, -0.5, -0.5],
+      "scale": [0.5, 0.5, 0.5]
+    },
+    "head": {
+      "rotation": [0, 0, 0],
+      "translation": [0, 6, 0],
+      "scale": [0.75, 0.75, 0.75]
     }
-  ],
-  "overrides": [
-    {
-      "predicate": {
-        "tconstruct:broken": 1
-      },
-      "model": "tinkers_spellbooks:item/tool/arcane_staff/broken"
-    }
-  ]
+  }
 }

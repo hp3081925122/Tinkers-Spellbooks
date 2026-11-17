@@ -27,6 +27,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LecternBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import net.minecraftforge.fml.DistExecutor;
 import org.hp.tinkers_spellbooks.client.StaffClientHelper;
 import org.hp.tinkers_spellbooks.compat.SpellContainerSyncHelper;
@@ -43,6 +44,12 @@ import slimeknights.tconstruct.library.tools.helper.TooltipUtil;
 import slimeknights.tconstruct.library.tools.item.ModifiableItem;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 import slimeknights.tconstruct.library.tools.nbt.ToolStack;
+import software.bernie.geckolib.animatable.GeoItem;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.AnimationController;
+import software.bernie.geckolib.core.animation.RawAnimation;
+import software.bernie.geckolib.util.GeckoLibUtil;
 import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.type.capability.ICurio;
 import top.theillusivec4.curios.api.type.capability.ICurioItem;
@@ -50,8 +57,13 @@ import top.theillusivec4.curios.api.type.capability.ICurioItem;
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.UUID;
+import java.util.function.Consumer;
 
-public class ModifiableSpellbookItem extends ModifiableItem implements ICurioItem, ISpellbook, ILecternPlaceable {
+public class ModifiableSpellbookItem extends ModifiableItem implements ICurioItem, ISpellbook, ILecternPlaceable, GeoItem {
+    private static final RawAnimation IDLE_ANIM = RawAnimation.begin().thenLoop("animation.modular_spellbook.idle");
+
+    private final AnimatableInstanceCache geoCache = GeckoLibUtil.createInstanceCache(this);
+
     public ModifiableSpellbookItem(Item.Properties properties, ToolDefinition toolDefinition) {
         super(properties, toolDefinition);
     }
@@ -142,5 +154,20 @@ public class ModifiableSpellbookItem extends ModifiableItem implements ICurioIte
             entry.getHook(ModifierHooks.TOOLTIP).addTooltip(tool, entry, player, tooltips, key, tooltipFlag);
         }
         return tooltips;
+    }
+
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+        controllers.add(new AnimationController<>(this, "controller", 2, state -> state.setAndContinue(IDLE_ANIM)));
+    }
+
+    @Override
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return this.geoCache;
+    }
+
+    @Override
+    public void initializeClient(Consumer<IClientItemExtensions> consumer) {
+        DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> StaffClientHelper.initSpellbookClient(consumer));
     }
 }

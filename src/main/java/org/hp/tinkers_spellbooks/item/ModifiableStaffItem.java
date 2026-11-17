@@ -4,6 +4,7 @@ import io.redspace.ironsspellbooks.api.magic.SpellSelectionManager;
 import io.redspace.ironsspellbooks.api.spells.SpellData;
 import io.redspace.ironsspellbooks.api.util.Utils;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -32,14 +33,27 @@ import slimeknights.tconstruct.library.tools.item.ModifiableItem;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 import slimeknights.tconstruct.library.tools.stat.ToolStats;
+import software.bernie.geckolib.animatable.GeoItem;
+import software.bernie.geckolib.animatable.SingletonGeoAnimatable;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.AnimationController;
+import software.bernie.geckolib.core.animation.RawAnimation;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class ModifiableStaffItem extends ModifiableItem {
+public class ModifiableStaffItem extends ModifiableItem implements GeoItem {
+    private static final RawAnimation IDLE_ANIM = RawAnimation.begin().thenLoop("animation.arcane_staff.idle");
+    private static final RawAnimation CAST_ANIM = RawAnimation.begin().thenPlay("animation.arcane_staff.cast");
+
+    private final AnimatableInstanceCache geoCache = GeckoLibUtil.createInstanceCache(this);
+
     public ModifiableStaffItem(Item.Properties properties, ToolDefinition toolDefinition) {
         super(properties, toolDefinition);
+        SingletonGeoAnimatable.registerSyncedAnimatable(this);
     }
 
     @Override
@@ -66,6 +80,9 @@ public class ModifiableStaffItem extends ModifiableItem {
                 }
                 String castingSlot = hand == InteractionHand.MAIN_HAND ? SpellSelectionManager.MAINHAND : SpellSelectionManager.OFFHAND;
                 if (spellData.getSpell().attemptInitiateCast(itemStack, spellLevel, level, player, selectionOption.getCastSource(), true, castingSlot)) {
+                    if (level instanceof ServerLevel serverLevel) {
+                        this.triggerAnim(player, GeoItem.getOrAssignId(itemStack, serverLevel), "controller", "cast");
+                    }
                     return InteractionResultHolder.consume(itemStack);
                 }
                 return InteractionResultHolder.fail(itemStack);
@@ -125,6 +142,17 @@ public class ModifiableStaffItem extends ModifiableItem {
         }
         TooltipUtil.addAttributes(this, tool, player, tooltips, TooltipUtil.SHOW_MELEE_ATTRIBUTES, EquipmentSlot.MAINHAND);
         return tooltips;
+    }
+
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+        controllers.add(new AnimationController<>(this, "controller", 2, state -> state.setAndContinue(IDLE_ANIM))
+                .triggerableAnim("cast", CAST_ANIM));
+    }
+
+    @Override
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return this.geoCache;
     }
 
     @Override
