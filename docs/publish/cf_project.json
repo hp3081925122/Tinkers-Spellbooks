@@ -1,0 +1,14 @@
+{
+  "name": "Tinkers' Spellbooks",
+  "summary": "Tinkers' Construct addon adding modular Iron's Spells 'n Spellbooks spellbooks and staves with custom parts, materials, modifiers, and full addon material compatibility.",
+  "license": "All Rights Reserved",
+  "distribution": "Allow distribution to 3rd party",
+  "allowComments": true,
+  "dropdowns": [
+    ["Class", "Mods"],
+    ["Main category", "Magic"],
+    ["Additional categories", "Tinkers' Construct"]
+  ],
+  "description": "cf_description.md",
+  "icon": "cf_icon.png"
+}

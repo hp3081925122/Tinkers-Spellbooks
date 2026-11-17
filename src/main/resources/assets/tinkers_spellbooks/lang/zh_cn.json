@@ -156,5 +156,7 @@
   "modifier.tinkers_spellbooks.warded_script": "护法铭文",
   "modifier.tinkers_spellbooks.warded_script.flavor": "偏折侵袭而来的异种魔力。",
   "modifier.tinkers_spellbooks.warded_script.description": "每级提升 +6% 法术抗性。",
-  "tooltip.tinkers_spellbooks.modifiers.hands": "在主手或副手时："
+  "tooltip.tinkers_spellbooks.modifiers.hands": "在主手或副手时：",
+  "book.tinkers_spellbooks.group_spellcasting_upgrades": "施法升级",
+  "book.tinkers_spellbooks.group_spellcasting_abilities": "施法能力"
 }

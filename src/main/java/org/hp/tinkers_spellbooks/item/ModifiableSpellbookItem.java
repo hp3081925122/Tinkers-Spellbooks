@@ -71,7 +71,17 @@ public class ModifiableSpellbookItem extends ModifiableItem implements ICurioIte
 
     @Override
     public boolean canEquipFromUse(SlotContext slotContext, ItemStack stack) {
-        return !ToolStack.from(stack).isBroken();
+        return true;
+    }
+
+    @Override
+    public boolean isDamageable(ItemStack stack) {
+        return false;
+    }
+
+    @Override
+    public boolean isBarVisible(ItemStack stack) {
+        return false;
     }
 
     @Override
@@ -96,9 +106,6 @@ public class ModifiableSpellbookItem extends ModifiableItem implements ICurioIte
             return ImmutableMultimap.of();
         }
         ToolStack tool = ToolStack.from(stack);
-        if (tool.isBroken()) {
-            return ImmutableMultimap.of();
-        }
         ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
         for (ModifierEntry entry : tool.getModifierList()) {
             if (entry.getModifier() instanceof ICurioMagicModifier curioModifier) {

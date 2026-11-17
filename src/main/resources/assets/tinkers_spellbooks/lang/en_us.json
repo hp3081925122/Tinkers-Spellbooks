@@ -156,5 +156,7 @@
   "modifier.tinkers_spellbooks.warded_script": "Warded Script",
   "modifier.tinkers_spellbooks.warded_script.flavor": "Deflects hostile magical energies.",
   "modifier.tinkers_spellbooks.warded_script.description": "Grants +6% Spell Resist per level.",
-  "tooltip.tinkers_spellbooks.modifiers.hands": "When in Main Hand or Off Hand:"
+  "tooltip.tinkers_spellbooks.modifiers.hands": "When in Main Hand or Off Hand:",
+  "book.tinkers_spellbooks.group_spellcasting_upgrades": "Spellcasting Upgrades",
+  "book.tinkers_spellbooks.group_spellcasting_abilities": "Spellcasting Abilities"
 }

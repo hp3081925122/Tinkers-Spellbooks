@@ -1,0 +1,20 @@
+{
+  "name": "匠魂魔导书与法杖",
+  "ename": "Tinkers' Spellbooks",
+  "intro": "匠魂3（Tinkers' Construct）与铁魔法（Iron's Spells 'n Spellbooks）的模块化联动附属，新增可自由组装的魔导典籍与导魔长杖、11种铁魔法材料及全材料自动兼容。",
+  "modid": "tinkers_spellbooks",
+  "cfprojectid": "1812166",
+  "core": "魔法",
+  "elements": ["魔法", "联动", "国创"],
+  "platforms": ["JAVA版 (JAVA Edition)"],
+  "versions": {"Forge": ["1.20.1"]},
+  "links": [],
+  "client": "需装",
+  "server": "需装",
+  "status": "活跃",
+  "source": "闭源",
+  "authors": [{"id": 39471, "name": "AI仙人", "roles": ["owner"]}],
+  "content_file": "mcmod_intro.html",
+  "cover_file": "mcmod_cover.png",
+  "injectCover": true
+}

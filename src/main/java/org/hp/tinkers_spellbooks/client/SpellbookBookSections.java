@@ -1,11 +1,13 @@
 package org.hp.tinkers_spellbooks.client;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.Resource;
+import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
 import org.hp.tinkers_spellbooks.TinkersSpellbooks;
 import org.hp.tinkers_spellbooks.registry.SpellbookItems;
 import org.hp.tinkers_spellbooks.stats.ArcaneBindingMaterialStats;
@@ -16,8 +18,10 @@ import org.hp.tinkers_spellbooks.stats.StaffHandleMaterialStats;
 import org.hp.tinkers_spellbooks.stats.StaffHeadMaterialStats;
 import slimeknights.mantle.client.book.BookLoader;
 import slimeknights.mantle.client.book.data.BookData;
+import slimeknights.mantle.client.book.data.PageData;
 import slimeknights.mantle.client.book.data.SectionData;
 import slimeknights.mantle.client.book.repository.BookRepository;
+import slimeknights.mantle.client.book.transformer.BookTransformer;
 import slimeknights.tconstruct.common.TinkerTags;
 import slimeknights.tconstruct.library.client.book.TinkerBook;
 import slimeknights.tconstruct.library.client.book.content.AbstractMaterialContent;
@@ -35,12 +39,17 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public final class SpellbookBookSections {
     private static final ResourceLocation PAGE_ID = ResourceLocation.fromNamespaceAndPath(TinkersSpellbooks.MOD_ID, "spellbook_material");
     private static final ResourceLocation LANGUAGE = ResourceLocation.fromNamespaceAndPath(TinkersSpellbooks.MOD_ID, "book/materials/language.lang");
+    private static final ResourceLocation LOAD_MODIFIERS = ResourceLocation.fromNamespaceAndPath("tconstruct", "load_modifiers");
+    private static final String GROUP_UPGRADES = "group_spellcasting_upgrades";
+    private static final String GROUP_ABILITIES = "group_spellcasting_abilities";
 
     public static void register() {
         for (MaterialStatsId stat : MaterialFallbackGenerator.ALL_STAT_IDS) {
@@ -50,6 +59,18 @@ public final class SpellbookBookSections {
         add(TinkerBook.PUNY_SMELTING, 2, 2, true, false);
         add(TinkerBook.MIGHTY_SMELTING, 3, 3, true, false);
         add(TinkerBook.ENCYCLOPEDIA, 0, Short.MAX_VALUE, false, true);
+        prependTransformer(TinkerBook.PUNY_SMELTING);
+        prependTransformer(TinkerBook.MIGHTY_SMELTING);
+        prependTransformer(TinkerBook.ENCYCLOPEDIA);
+    }
+
+    private static void prependTransformer(BookData book) {
+        List<BookTransformer> transformers = ObfuscationReflectionHelper.getPrivateValue(BookData.class, book, "transformers");
+        if (transformers != null) {
+            transformers.add(0, SpellcastingModifierGroupTransformer.INSTANCE);
+        } else {
+            book.addTransformer(SpellcastingModifierGroupTransformer.INSTANCE);
+        }
     }
 
     private static void add(BookData book, int minTier, int maxTier, boolean excludeDistant, boolean detailed) {
@@ -162,6 +183,8 @@ public final class SpellbookBookSections {
             for (MaterialStatsId stat : MaterialFallbackGenerator.ALL_STAT_IDS) {
                 lang.append(sectionName(stat)).append('=').append(I18n.get("stat." + stat.getNamespace() + "." + stat.getPath())).append('\n');
             }
+            lang.append("upgrades.").append(GROUP_UPGRADES).append('=').append(I18n.get("book.tinkers_spellbooks.group_spellcasting_upgrades")).append('\n');
+            lang.append("abilities.").append(GROUP_ABILITIES).append('=').append(I18n.get("book.tinkers_spellbooks.group_spellcasting_abilities")).append('\n');
             byte[] bytes = lang.toString().getBytes(StandardCharsets.UTF_8);
             return Optional.of(new Resource(Minecraft.getInstance().getVanillaPackResources(), () -> new ByteArrayInputStream(bytes)));
         }
@@ -212,6 +235,38 @@ public final class SpellbookBookSections {
             String base = "material." + material.getNamespace() + "." + material.getPath() + (this.detailed ? ".encyclopedia" : ".flavor");
             String specific = base + "." + this.stat.getPath();
             return I18n.exists(specific) ? specific : base;
+        }
+    }
+
+    private static final class SpellcastingModifierGroupTransformer extends BookTransformer {
+        private static final SpellcastingModifierGroupTransformer INSTANCE = new SpellcastingModifierGroupTransformer();
+
+        @Override
+        public void transform(BookData book) {
+            book.strings.put("upgrades." + GROUP_UPGRADES, I18n.get("book.tinkers_spellbooks.group_spellcasting_upgrades"));
+            book.strings.put("abilities." + GROUP_ABILITIES, I18n.get("book.tinkers_spellbooks.group_spellcasting_abilities"));
+            addModifierGroup(book.findSection("upgrades"), GROUP_UPGRADES, "tinkers_spellbooks:upgrades", "upgrades/spellcasting", "spellcasting");
+            addModifierGroup(book.findSection("abilities"), GROUP_ABILITIES, "tinkers_spellbooks:abilities", "abilities/spellcasting", "spellcasting");
+        }
+
+        private static void addModifierGroup(@Nullable SectionData section, String groupName, String tag, String path, String prefix) {
+            if (section == null || section.pages.stream().anyMatch(page -> groupName.equals(page.name))) {
+                return;
+            }
+            JsonObject loadModifiers = new JsonObject();
+            loadModifiers.addProperty("tag", tag);
+            loadModifiers.addProperty("path", path);
+            loadModifiers.addProperty("prefix", prefix);
+            Map<ResourceLocation, JsonElement> extraData = new HashMap<>();
+            extraData.put(LOAD_MODIFIERS, loadModifiers);
+            PageData page = new PageData(false);
+            page.name = groupName;
+            page.data = "";
+            page.extraData = extraData;
+            page.parent = section;
+            page.source = section.source;
+            page.load();
+            section.pages.add(page);
         }
     }
 

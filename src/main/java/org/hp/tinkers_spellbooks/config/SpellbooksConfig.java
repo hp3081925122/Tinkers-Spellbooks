@@ -23,7 +23,7 @@ public final class SpellbooksConfig {
                 .defineInRange("maxStaffSlots", 6, 1, 15);
         CONSUME_STAFF_DURABILITY_ON_CAST = builder
                 .comment("Whether casting a spell with the Arcane Staff consumes 1 durability. / 使用模块化奥术法杖施法时是否消耗 1 点耐久。")
-                .define("consumeStaffDurabilityOnCast", false);
+                .define("consumeStaffDurabilityOnCast", true);
         builder.pop();
         COMMON_SPEC = builder.build();
     }
